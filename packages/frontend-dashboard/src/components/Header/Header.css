@@ -1,15 +1,19 @@
 .header-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  padding: 0 !important;
+  min-height: 70px;
 }
 
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.header-left img {
+  height: 40px;
+  width: auto;
 }
 
-.header-right button {
-  margin-left: 10px;
+.header-middle h6 {
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.header-middle h6:hover {
+  color: var(--highlight-color);
+  cursor: pointer;
 }

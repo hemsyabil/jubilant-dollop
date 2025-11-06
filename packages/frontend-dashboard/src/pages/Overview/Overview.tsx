@@ -4,7 +4,7 @@ import './Overview.css';
 const Overview = () => {
   return (
     <Box className="home-container">
-      <Typography variant="h4">Welcome to the Overview Inventory Dashboard</Typography>
+      <Typography variant="h4">Overview</Typography>
     </Box>
   );
 };
