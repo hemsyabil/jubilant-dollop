@@ -3,21 +3,6 @@
   min-height: 70px;
 }
 
-.header-left img {
-  height: 40px;
-  width: auto;
-}
-
-.header-middle h6 {
-  font-weight: 500;
-  transition: color 0.2s ease;
-}
-
-.header-middle h6:hover {
-  color: var(--highlight-color);
-  cursor: pointer;
-}
-
 .header-menu {
   font-family: "Nunito Sans", sans-serif;
   font-weight: 600;
@@ -33,7 +18,6 @@
   color: var(--highlight-color, #1976d2);
 }
 
-/* Active Link with bottom border */
 .header-menu.active {
   color: var(--highlight-color, #1976d2);
   border-bottom: 3px solid var(--highlight-color, #1976d2);
