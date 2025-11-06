@@ -1,16 +1,15 @@
-import { Typography, Box, Container } from "@mui/material";
-import { useTranslation } from 'react-i18next';
-import './Inventory.css';
+import { Box, Container, Typography } from "@mui/material"
+import { useTranslation } from "react-i18next"
 
 const Inventory = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
   return (
     <Box>
       <Container>
-        <Typography variant="h4">{t('inventory')}</Typography>
-        </Container>
+        <Typography variant="h4">{t("inventory")}</Typography>
+      </Container>
     </Box>
-  );
-};
+  )
+}
 
-export default Inventory;
+export default Inventory

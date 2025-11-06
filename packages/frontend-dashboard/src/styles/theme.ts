@@ -1,8 +1,8 @@
-import { createTheme } from '@mui/material/styles';
-import type { PaletteMode } from '@mui/material'; // ✅ Correct import
+import type { PaletteMode } from "@mui/material"
+import { createTheme } from "@mui/material/styles"
 
 const getCSSVar = (name: string) =>
-  getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  getComputedStyle(document.documentElement).getPropertyValue(name).trim()
 
 export const getDesignTokens = (mode: PaletteMode) => ({
   typography: {
@@ -14,41 +14,52 @@ export const getDesignTokens = (mode: PaletteMode) => ({
   },
   palette: {
     mode,
-    ...(mode === 'light'
+    ...(mode === "light"
       ? {
           primary: {
-            main: getCSSVar('--turquoise-color') || '#48E5C2',
+            main: getCSSVar("--turquoise-color") || "#48E5C2",
           },
           secondary: {
-            main: getCSSVar('--highlight-color') || '#F66247',
+            main: getCSSVar("--highlight-color") || "#F66247",
           },
           background: {
-            default: getCSSVar('--seasalt-color') || '#FCFAF9',
-            paper: '#ffffff',
+            default: "#f9f9f9", // From globals.css
+            paper: "#ffffff",
           },
           text: {
-            primary: getCSSVar('--jet-color') || '#333333',
-            secondary: getCSSVar('--davys-gray-color') || '#5E5E5E',
+            primary: getCSSVar("--jet-color") || "#333333",
+            secondary: getCSSVar("--davys-gray-color") || "#5E5E5E",
           },
         }
       : {
           primary: {
-            main: getCSSVar('--highlight-color') || '#F66247',
+            main: getCSSVar("--highlight-color") || "#F66247",
           },
           secondary: {
-            main: getCSSVar('--turquoise-color') || '#48E5C2',
+            main: getCSSVar("--turquoise-color") || "#48E5C2",
           },
           background: {
-            default: '#121212',
-            paper: '#1e1e1e',
+            default: "#121212",
+            paper: "#1e1e1e",
           },
           text: {
-            primary: '#ffffff',
-            secondary: '#b3b3b3',
+            primary: "#ffffff",
+            secondary: "#b3b3b3",
           },
         }),
   },
-  shadows: Array(25).fill('var(--box-shadow)') as any,
-});
+  components: {
+    // Global component styles
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          margin: 0,
+          fontFamily: '"Nunito Sans", sans-serif',
+        },
+      },
+    },
+  },
+})
 
-export const createAppTheme = (mode: PaletteMode) => createTheme(getDesignTokens(mode));
+export const createAppTheme = (mode: PaletteMode) =>
+  createTheme(getDesignTokens(mode))
