@@ -7,7 +7,6 @@ import {
   Box,
   Container,
   Avatar,
-  Tooltip,
 } from '@mui/material';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -16,6 +15,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import { ColorModeContext } from '../../styles/ColorModeContext';
 import { useTheme } from '@mui/material/styles';
 import './Header.css';
+import { NavLink } from 'react-router-dom';
 
 const Header = () => {
   const theme = useTheme();
@@ -62,19 +62,13 @@ const Header = () => {
           </Box>
 
           {/* Middle: Navigation */}
-          <Box
-            sx={{
-              display: 'flex',
-              gap: 4,
-              alignItems: 'center',
-            }}
-          >
-            <Typography variant="h6" sx={{ cursor: 'pointer', fontWeight: 500 }}>
+          <Box sx={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+            <NavLink to="/" className="header-menu">
               Overview
-            </Typography>
-            <Typography variant="h6" sx={{ cursor: 'pointer', fontWeight: 500 }}>
+            </NavLink>
+            <NavLink to="/inventory" className="header-menu">
               Inventory
-            </Typography>
+            </NavLink>
           </Box>
 
           {/* Right: Icon actions */}

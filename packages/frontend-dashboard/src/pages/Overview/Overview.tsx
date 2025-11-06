@@ -1,10 +1,13 @@
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Container } from "@mui/material";
 import './Overview.css';
 
 const Overview = () => {
   return (
-    <Box className="home-container">
-      <Typography variant="h4">Overview</Typography>
+    <Box>
+      <Container>
+        <Typography variant="h4">Overview</Typography>
+        </Container>
+      
     </Box>
   );
 };
