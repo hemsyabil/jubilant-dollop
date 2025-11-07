@@ -6,5 +6,11 @@
   "dark": "Dark",
   "dashboard": "Dashboard",
   "settings": "Settings",
-  "footer_text": "All rights reserved"
+  "footer_text": "All rights reserved",
+  "totalSites": "Total Sites",
+  "totalInstruments": "Total Instruments",
+  "totalApplications": "Total Applications",
+  "activeServers": "Active Servers",
+  "firewallsOnline": "Firewalls Online",
+  "backupUnits": "Backup Units"
 }

@@ -6,5 +6,11 @@
   "dark": "Sombre",
   "dashboard": "Tableau de bord",
   "settings": "Paramètres",
-  "footer_text": "Tous droits réservés"
+  "footer_text": "Tous droits réservés",
+  "totalSites": "Sites Totaux",
+  "totalInstruments": "Instruments Totaux",
+  "totalApplications": "Applications Totales",
+  "activeServers": "Serveurs Actifs",
+  "firewallsOnline": "Pare-feux En Ligne",
+  "backupUnits": "Unités de Sauvegarde"
 }
