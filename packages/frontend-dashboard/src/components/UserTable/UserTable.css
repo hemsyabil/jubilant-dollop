@@ -1,0 +1,62 @@
+.user-table-container {
+  padding: 24px;
+  position: relative;
+}
+
+.user-table-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.user-table-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.user-table-add-button {
+  text-transform: none;
+  font-weight: 500;
+}
+
+.user-table-alert {
+  margin-bottom: 16px;
+}
+
+.user-table-paper {
+  width: 100%;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-table-action-buttons {
+  display: flex;
+  gap: 4px;
+  justify-content: center;
+}
+
+.user-table-form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.user-table-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 1000;
+}
+
+.user-table-website-link {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.user-table-website-link:hover {
+  text-decoration: underline;
+}
