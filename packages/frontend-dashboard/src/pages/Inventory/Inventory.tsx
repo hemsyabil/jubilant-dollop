@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material"
+import { Alert, Space, Typography } from "antd"
 import { useTranslation } from "react-i18next"
 import {
   CategoryDistributionChart,
@@ -12,6 +12,8 @@ import {
 import useInventoryData from "../../hooks/useInventoryData"
 import "./Inventory.css"
 
+const { Title } = Typography
+
 const Inventory = () => {
   const { t } = useTranslation()
   const { salesData, categoryData, inventoryData, loading, error } =
@@ -23,27 +25,27 @@ const Inventory = () => {
 
   if (error) {
     return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="400px"
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minHeight: "400px",
+        }}
       >
-        <Typography variant="h6" color="error">
-          {error}
-        </Typography>
-      </Box>
+        <Alert message={error} type="error" showIcon />
+      </div>
     )
   }
 
   return (
-    <Box sx={{ py: 3 }}>
-      <Container maxWidth="lg">
-        <Typography variant="h4" gutterBottom>
+    <div style={{ padding: "24px" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        <Title level={2} style={{ marginBottom: "24px" }}>
           {t("inventory_dashboard")}
-        </Typography>
+        </Title>
 
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
+        <Space direction="vertical" size="large" style={{ width: "100%" }}>
           {/* First Row - Sales Performance & Category Distribution */}
           <DashboardRow>
             <SalesPerformanceChart salesData={salesData} />
@@ -60,9 +62,9 @@ const Inventory = () => {
           <DashboardRow fullWidth>
             <RecentSalesChart salesData={salesData} monthsToShow={6} />
           </DashboardRow>
-        </Box>
-      </Container>
-    </Box>
+        </Space>
+      </div>
+    </div>
   )
 }
 

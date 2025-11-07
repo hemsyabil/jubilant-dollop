@@ -1,25 +1,21 @@
-import Brightness4Icon from "@mui/icons-material/Brightness4"
-import Brightness7Icon from "@mui/icons-material/Brightness7"
-import LanguageIcon from "@mui/icons-material/Language"
-import LoginIcon from "@mui/icons-material/Login"
 import {
-  AppBar,
-  Box,
-  Container,
-  IconButton,
-  Toolbar,
-  Typography,
-} from "@mui/material"
-import { useTheme } from "@mui/material/styles"
-import { useContext, useState } from "react"
+  BulbFilled,
+  BulbOutlined,
+  GlobalOutlined,
+  LoginOutlined,
+} from "@ant-design/icons"
+import { Button, Layout, Space, Typography } from "antd"
+import { useState } from "react"
 import { useTranslation } from "react-i18next"
-import { NavLink, useNavigate } from "react-router-dom"
-import { ColorModeContext } from "../../styles/ColorModeContext"
+import { Link, useNavigate } from "react-router-dom"
+import { useTheme } from "../../hooks/useTheme"
 import "./Header.css"
 
+const { Header: AntHeader } = Layout
+const { Text } = Typography
+
 const Header = () => {
-  const theme = useTheme()
-  const colorMode = useContext(ColorModeContext)
+  const { isDark, toggleTheme } = useTheme()
   const { t, i18n } = useTranslation()
   const [language, setLanguage] = useState<"EN" | "FR">("EN")
   const navigate = useNavigate()
@@ -27,7 +23,7 @@ const Header = () => {
   const toggleLanguage = () => {
     const newLang = language === "EN" ? "FR" : "EN"
     setLanguage(newLang)
-    i18n.changeLanguage(newLang)
+    i18n.changeLanguage(newLang.toLowerCase())
   }
 
   const handleLogin = () => {
@@ -35,104 +31,86 @@ const Header = () => {
   }
 
   return (
-    <AppBar
-      position="static"
-      elevation={0}
-      sx={{
-        backgroundColor:
-          theme.palette.mode === "light"
-            ? theme.palette.background.default
-            : theme.palette.background.paper,
-        color: theme.palette.text.primary,
-        boxShadow: "var(--box-shadow)",
+    <AntHeader
+      style={{
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        padding: "0 24px",
+        height: "70px",
+        boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
       }}
     >
-      <Container maxWidth="lg">
-        <Toolbar
-          className="header-toolbar"
-          sx={{
+      {/* Logo */}
+      <div style={{ display: "flex", alignItems: "center" }}>
+        <img
+          alt="Logo"
+          src="https://picsum.photos/400/60/?blur"
+          style={{ height: 50, borderRadius: 4 }}
+        />
+      </div>
+
+      {/* Navigation */}
+      <Space size="large">
+        <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
+          <Text strong>{t("overview")}</Text>
+        </Link>
+        <Link
+          to="/inventory"
+          style={{ color: "inherit", textDecoration: "none" }}
+        >
+          <Text strong>{t("inventory")}</Text>
+        </Link>
+      </Space>
+
+      {/* Actions */}
+      <Space size="large">
+        <Button
+          type="text"
+          icon={isDark ? <BulbFilled /> : <BulbOutlined />}
+          onClick={toggleTheme}
+          style={{
             display: "flex",
-            justifyContent: "space-between",
             alignItems: "center",
-            py: 1,
+            gap: "6px",
+            height: "40px",
+            padding: "0 12px",
           }}
         >
-          {/* Left: Logo */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-            <img
-              alt="PNG here"
-              src="https://picsum.photos/400/60/?blur"
-              style={{ height: 50, borderRadius: 4 }}
-            />
-          </Box>
+          {isDark ? t("dark") : t("light")}
+        </Button>
 
-          {/* Middle: Navigation */}
-          <Box sx={{ display: "flex", gap: 4, alignItems: "center" }}>
-            <NavLink to="/" className="header-menu">
-              {t("overview")}
-            </NavLink>
-            <NavLink to="/inventory" className="header-menu">
-              {t("inventory")}
-            </NavLink>
-          </Box>
+        <Button
+          type="text"
+          icon={<GlobalOutlined />}
+          onClick={toggleLanguage}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+            height: "40px",
+            padding: "0 12px",
+          }}
+        >
+          {language}
+        </Button>
 
-          {/* Right: Actions */}
-          <Box sx={{ display: "flex", alignItems: "center", gap: 3 }}>
-            {/* Mode toggle */}
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <IconButton
-                onClick={colorMode.toggleColorMode}
-                color="inherit"
-                size="small"
-              >
-                {theme.palette.mode === "dark" ? (
-                  <Brightness7Icon fontSize="small" />
-                ) : (
-                  <Brightness4Icon fontSize="small" />
-                )}
-              </IconButton>
-              <Typography variant="caption">
-                {theme.palette.mode === "dark" ? t("dark") : t("light")}
-              </Typography>
-            </Box>
-
-            {/* Language toggle */}
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <IconButton onClick={toggleLanguage} color="inherit" size="small">
-                <LanguageIcon fontSize="small" />
-              </IconButton>
-              <Typography variant="caption">{language}</Typography>
-            </Box>
-
-            {/* Login link */}
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <IconButton onClick={handleLogin} color="inherit" size="small">
-                <LoginIcon fontSize="small" />
-              </IconButton>
-              <Typography variant="caption">{t("login")}</Typography>
-            </Box>
-          </Box>
-        </Toolbar>
-      </Container>
-    </AppBar>
+        <Button
+          type="text"
+          icon={<LoginOutlined />}
+          onClick={handleLogin}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+            height: "40px",
+            padding: "0 12px",
+          }}
+        >
+          {t("login")}
+        </Button>
+      </Space>
+    </AntHeader>
   )
 }
 

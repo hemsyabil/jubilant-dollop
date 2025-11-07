@@ -1,19 +1,24 @@
-import { Box, CircularProgress } from "@mui/material"
+import { Spin } from "antd"
+import React from "react"
 
 interface LoadingSpinnerProps {
   minHeight?: string
 }
 
-const LoadingSpinner = ({ minHeight = "400px" }: LoadingSpinnerProps) => {
+const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
+  minHeight = "400px",
+}) => {
   return (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      minHeight={minHeight}
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight,
+      }}
     >
-      <CircularProgress />
-    </Box>
+      <Spin size="large" />
+    </div>
   )
 }
 

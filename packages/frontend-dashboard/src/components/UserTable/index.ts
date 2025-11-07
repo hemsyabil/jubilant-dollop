@@ -1,6 +1,2 @@
-export { default as DeleteConfirmDialog } from "./DeleteConfirmDialog"
-export { default as TableEmptyState } from "./TableEmptyState"
-export { default as UserFormDialog } from "./UserFormDialog"
+export { default as UserTable } from "./UserTable"
 export { default } from "./UserTable"
-export { default as UserTableHeader } from "./UserTableHeader"
-export { default as UserTableRow } from "./UserTableRow"
