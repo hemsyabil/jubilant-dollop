@@ -31,5 +31,16 @@
   "user_deleted_success": "User deleted successfully",
   "error_loading_users": "Error loading users",
   "error_saving_user": "Error saving user",
-  "error_deleting_user": "Error deleting user"
+  "error_deleting_user": "Error deleting user",
+  "inventory_dashboard": "Inventory Dashboard",
+  "monthly_sales_performance": "Monthly Sales Performance",
+  "sales_volume": "Sales Volume",
+  "orders": "Orders",
+  "inventory_by_category": "Inventory by Category",
+  "revenue_trend_analysis": "Revenue Trend Analysis",
+  "revenue": "Revenue ($)",
+  "current_inventory_items": "Current Inventory Items",
+  "in_stock": "in stock",
+  "recent_sales_vs_orders": "Recent Sales vs Orders Comparison",
+  "total_orders": "Total Orders"
 }

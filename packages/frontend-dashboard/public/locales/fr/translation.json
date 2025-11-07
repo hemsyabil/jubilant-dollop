@@ -31,5 +31,16 @@
   "user_deleted_success": "Utilisateur supprimé avec succès",
   "error_loading_users": "Erreur lors du chargement des utilisateurs",
   "error_saving_user": "Erreur lors de la sauvegarde de l'utilisateur",
-  "error_deleting_user": "Erreur lors de la suppression de l'utilisateur"
+  "error_deleting_user": "Erreur lors de la suppression de l'utilisateur",
+  "inventory_dashboard": "Tableau de bord d'inventaire",
+  "monthly_sales_performance": "Performance mensuelle des ventes",
+  "sales_volume": "Volume des ventes",
+  "orders": "Commandes",
+  "inventory_by_category": "Inventaire par catégorie",
+  "revenue_trend_analysis": "Analyse des tendances de revenus",
+  "revenue": "Revenus ($)",
+  "current_inventory_items": "Articles d'inventaire actuels",
+  "in_stock": "en stock",
+  "recent_sales_vs_orders": "Comparaison ventes récentes vs commandes",
+  "total_orders": "Total des commandes"
 }
