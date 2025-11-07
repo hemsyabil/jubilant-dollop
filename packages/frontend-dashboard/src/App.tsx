@@ -1,21 +1,23 @@
-import { Box } from '@mui/material';
-import { BrowserRouter } from 'react-router-dom';
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import AppRoutes from './routes/AppRoutes';
+import { Layout } from "antd"
+import { BrowserRouter } from "react-router-dom"
+import Footer from "./components/Footer/Footer"
+import Header from "./components/Header/Header"
+import AppRoutes from "./routes/AppRoutes"
+
+const { Content } = Layout
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Box display="flex" flexDirection="column" minHeight="100vh">
+      <Layout style={{ minHeight: "100vh" }}>
         <Header />
-        <Box component="main" flexGrow={1}>
+        <Content style={{ flex: 1 }}>
           <AppRoutes />
-        </Box>
+        </Content>
         <Footer />
-      </Box>
+      </Layout>
     </BrowserRouter>
-  );
-};
+  )
+}
 
-export default App;
+export default App

@@ -1,18 +1,20 @@
-import { Box, Container, Typography } from "@mui/material"
+import { Typography } from "antd"
 import { useTranslation } from "react-i18next"
 import UserTable from "../../components/UserTable"
+
+const { Title } = Typography
 
 const Overview = () => {
   const { t } = useTranslation()
   return (
-    <Container maxWidth="xl">
-      <Box sx={{ py: 3 }}>
-        <Typography variant="h4" sx={{ mb: 4 }}>
+    <div style={{ padding: "24px" }}>
+      <div style={{ maxWidth: "1400px", margin: "0 auto" }}>
+        <Title level={2} style={{ marginBottom: "24px" }}>
           {t("overview")}
-        </Typography>
+        </Title>
         <UserTable title="User Management System" />
-      </Box>
-    </Container>
+      </div>
+    </div>
   )
 }
 

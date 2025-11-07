@@ -3,22 +3,24 @@ import { useTranslation } from "react-i18next"
 import AntdBarChart from "../AntdCharts/AntdBarChart"
 import type { SalesData } from "../../utils/web/chartService"
 
-interface SalesPerformanceChartProps {
+interface RecentSalesChartProps {
   salesData: SalesData[]
   height?: number
+  monthsToShow?: number
 }
 
-const SalesPerformanceChart: React.FC<SalesPerformanceChartProps> = ({
+const RecentSalesChart: React.FC<RecentSalesChartProps> = ({
   salesData,
-  height = 350,
+  height = 300,
+  monthsToShow = 6,
 }) => {
   const { t } = useTranslation()
 
   return (
-    <Col xs={24} lg={16}>
+    <Col span={24}>
       <AntdBarChart
-        data={salesData}
-        title={t("monthly_sales_performance")}
+        data={salesData.slice(-monthsToShow)}
+        title={t("recent_sales_vs_orders")}
         xDataKey="month"
         bars={[
           {
@@ -29,7 +31,7 @@ const SalesPerformanceChart: React.FC<SalesPerformanceChartProps> = ({
           {
             dataKey: "orders",
             backgroundColor: "#82ca9d",
-            label: t("orders"),
+            label: t("total_orders"),
           },
         ]}
         height={height}
@@ -38,4 +40,4 @@ const SalesPerformanceChart: React.FC<SalesPerformanceChartProps> = ({
   )
 }
 
-export default SalesPerformanceChart
+export default RecentSalesChart

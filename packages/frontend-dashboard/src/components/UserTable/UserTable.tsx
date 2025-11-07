@@ -1,17 +1,5 @@
-import { Add as AddIcon } from "@mui/icons-material"
-import {
-  Alert,
-  Box,
-  Fab,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TablePagination,
-  TableRow,
-} from "@mui/material"
+import { PlusOutlined, ReloadOutlined } from "@ant-design/icons"
+import { Button, Card, message, Space, Table, Typography } from "antd"
 import React, { useEffect, useState } from "react"
 import { useTranslation } from "react-i18next"
 import {
@@ -21,45 +9,14 @@ import {
   updateUser,
   type User,
 } from "../../utils/web/userService"
-import DeleteConfirmDialog from "./DeleteConfirmDialog"
-import TableEmptyState from "./TableEmptyState"
-import UserFormDialog from "./UserFormDialog"
+import UserFormModal, { type UserFormData } from "./UserFormModal"
 import "./UserTable.css"
-import UserTableHeader from "./UserTableHeader"
-import UserTableRow from "./UserTableRow"
+import { getUserTableColumns } from "./userTableColumns"
+
+const { Title } = Typography
 
 interface UserTableProps {
   title?: string
-}
-
-interface UserFormData {
-  name: string
-  email: string
-  username: string
-  phone: string
-  website: string
-  company: {
-    name: string
-  }
-  address: {
-    city: string
-    zipcode: string
-  }
-}
-
-const initialFormData: UserFormData = {
-  name: "",
-  email: "",
-  username: "",
-  phone: "",
-  website: "",
-  company: {
-    name: "",
-  },
-  address: {
-    city: "",
-    zipcode: "",
-  },
 }
 
 const UserTable: React.FC<UserTableProps> = ({ title }) => {
@@ -69,35 +26,23 @@ const UserTable: React.FC<UserTableProps> = ({ title }) => {
   // State management
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-  const [page, setPage] = useState(0)
-  const [rowsPerPage, setRowsPerPage] = useState(10)
-
-  // Dialog states
-  const [dialogOpen, setDialogOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false)
   const [editingUser, setEditingUser] = useState<User | null>(null)
-  const [formData, setFormData] = useState<UserFormData>(initialFormData)
   const [formLoading, setFormLoading] = useState(false)
-
-  // Delete confirmation
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
-  const [userToDelete, setUserToDelete] = useState<User | null>(null)
-  const [deleteLoading, setDeleteLoading] = useState(false)
 
   // Load users on component mount
   useEffect(() => {
     loadUsers()
   }, [])
 
-  // Load users function using async/await
+  // Load users function
   const loadUsers = async () => {
     setLoading(true)
-    setError(null)
     try {
       const fetchedUsers = await getUsers()
       setUsers(fetchedUsers)
     } catch (err) {
-      setError("Failed to load users. Please try again.")
+      message.error("Failed to load users. Please try again.")
       console.error("Error loading users:", err)
     } finally {
       setLoading(false)
@@ -105,249 +50,112 @@ const UserTable: React.FC<UserTableProps> = ({ title }) => {
   }
 
   // Event handlers
-  const handleChangePage = (_event: unknown, newPage: number) => {
-    setPage(newPage)
-  }
-
-  const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10))
-    setPage(0)
-  }
-
-  const handleAddClick = () => {
+  const handleAdd = () => {
     setEditingUser(null)
-    setFormData(initialFormData)
-    setDialogOpen(true)
+    setModalOpen(true)
   }
 
-  const handleEditClick = (user: User) => {
+  const handleEdit = (user: User) => {
     setEditingUser(user)
-    setFormData({
-      name: user.name,
-      email: user.email,
-      username: user.username,
-      phone: user.phone,
-      website: user.website,
-      company: {
-        name: user.company.name,
-      },
-      address: {
-        city: user.address.city,
-        zipcode: user.address.zipcode,
-      },
-    })
-    setDialogOpen(true)
+    setModalOpen(true)
   }
 
-  const handleDeleteClick = (userId: number) => {
-    const user = users.find((u) => u.id === userId)
-    if (user) {
-      setUserToDelete(user)
-      setDeleteDialogOpen(true)
-    }
-  }
-
-  const handleDeleteConfirm = async () => {
-    if (!userToDelete) return
-
-    setDeleteLoading(true)
+  const handleDelete = async (userId: number) => {
     try {
-      await deleteUser(userToDelete.id)
-      setUsers(users.filter((user) => user.id !== userToDelete.id))
-      setDeleteDialogOpen(false)
-      setUserToDelete(null)
+      await deleteUser(userId)
+      setUsers(users.filter((user) => user.id !== userId))
+      message.success("User deleted successfully")
     } catch (err) {
-      setError("Failed to delete user. Please try again.")
+      message.error("Failed to delete user. Please try again.")
       console.error("Error deleting user:", err)
-    } finally {
-      setDeleteLoading(false)
     }
   }
 
-  // Form submission using mixed async approaches
-  const handleFormSubmit = async (event: React.FormEvent) => {
-    event.preventDefault()
+  const handleFormSubmit = async (formData: UserFormData) => {
     setFormLoading(true)
-    setError(null)
 
     try {
       if (editingUser) {
-        // Update existing user - using .then/.catch approach
-        updateUser(editingUser.id, formData)
-          .then((updatedUser) => {
-            setUsers(
-              users.map((user) =>
-                user.id === editingUser.id ? updatedUser : user
-              )
-            )
-            setDialogOpen(false)
-            setFormData(initialFormData)
-          })
-          .catch((err) => {
-            setError("Failed to save user. Please try again.")
-            console.error("Error saving user:", err)
-          })
-          .finally(() => {
-            setFormLoading(false)
-          })
+        // Update existing user
+        const updatedUser = await updateUser(editingUser.id, formData)
+        setUsers(
+          users.map((user) => (user.id === editingUser.id ? updatedUser : user))
+        )
+        message.success("User updated successfully")
       } else {
-        // Create new user - using async/await approach
+        // Create new user
         const newUser = await createUser(formData)
         setUsers([...users, newUser])
-        setDialogOpen(false)
-        setFormData(initialFormData)
+        message.success("User created successfully")
       }
+      setModalOpen(false)
     } catch (err) {
-      setError("Failed to save user. Please try again.")
+      message.error("Failed to save user. Please try again.")
       console.error("Error saving user:", err)
+      throw err // Re-throw to let modal handle it
     } finally {
-      if (!editingUser) {
-        setFormLoading(false)
-      }
+      setFormLoading(false)
     }
   }
 
-  const handleFormChange = (field: string, value: string) => {
-    if (field === "company.name") {
-      setFormData((prev) => ({
-        ...prev,
-        company: {
-          ...prev.company,
-          name: value,
-        },
-      }))
-    } else if (field === "address.city") {
-      setFormData((prev) => ({
-        ...prev,
-        address: {
-          ...prev.address,
-          city: value,
-        },
-      }))
-    } else if (field === "address.zipcode") {
-      setFormData((prev) => ({
-        ...prev,
-        address: {
-          ...prev.address,
-          zipcode: value,
-        },
-      }))
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [field]: value,
-      }))
-    }
-  }
-
-  const handleDialogClose = () => {
-    setDialogOpen(false)
+  const handleModalClose = () => {
+    setModalOpen(false)
     setEditingUser(null)
-    setFormData(initialFormData)
   }
 
-  const handleDeleteDialogClose = () => {
-    setDeleteDialogOpen(false)
-    setUserToDelete(null)
-  }
-
-  // Get current page data
-  const paginatedUsers = users.slice(
-    page * rowsPerPage,
-    page * rowsPerPage + rowsPerPage
-  )
+  // Get table columns with handlers
+  const columns = getUserTableColumns({
+    onEdit: handleEdit,
+    onDelete: handleDelete,
+  })
 
   return (
-    <Box className="user-table-container">
-      <UserTableHeader
-        title={displayTitle}
-        onAddClick={handleAddClick}
-        onRefreshClick={loadUsers}
-        loading={loading}
-      />
-
-      {error && (
-        <Alert severity="error" className="user-table-alert">
-          {error}
-        </Alert>
-      )}
-
-      <Paper className="user-table-paper">
-        <TableContainer>
-          <Table stickyHeader>
-            <TableHead>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Username</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Phone</TableCell>
-                <TableCell>Website</TableCell>
-                <TableCell>Company</TableCell>
-                <TableCell>City</TableCell>
-                <TableCell>Zip Code</TableCell>
-                <TableCell align="center">Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {loading && users.length === 0 ? (
-                <TableEmptyState loading={true} />
-              ) : paginatedUsers.length === 0 ? (
-                <TableEmptyState loading={false} message="No users found" />
-              ) : (
-                paginatedUsers.map((user) => (
-                  <UserTableRow
-                    key={user.id}
-                    user={user}
-                    onEditClick={handleEditClick}
-                    onDeleteClick={handleDeleteClick}
-                  />
-                ))
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-
-        <TablePagination
-          rowsPerPageOptions={[5, 10, 25, 50]}
-          component="div"
-          count={users.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
-
-      <UserFormDialog
-        open={dialogOpen}
-        editingUser={editingUser}
-        formData={formData}
-        formLoading={formLoading}
-        onClose={handleDialogClose}
-        onSubmit={handleFormSubmit}
-        onFormChange={handleFormChange}
-      />
-
-      <DeleteConfirmDialog
-        open={deleteDialogOpen}
-        userName={userToDelete?.name || ""}
-        onClose={handleDeleteDialogClose}
-        onConfirm={handleDeleteConfirm}
-        loading={deleteLoading}
-      />
-
-      <Fab
-        color="primary"
-        className="user-table-fab"
-        onClick={handleAddClick}
-        size="medium"
+    <div className="user-table-container">
+      <Card
+        title={
+          <Title level={4} style={{ margin: 0 }}>
+            {displayTitle}
+          </Title>
+        }
+        extra={
+          <Space>
+            <Button
+              icon={<ReloadOutlined />}
+              onClick={loadUsers}
+              loading={loading}
+            >
+              Refresh
+            </Button>
+            <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
+              Add User
+            </Button>
+          </Space>
+        }
       >
-        <AddIcon />
-      </Fab>
-    </Box>
+        <Table
+          columns={columns}
+          dataSource={users}
+          loading={loading}
+          rowKey="id"
+          pagination={{
+            pageSize: 10,
+            showSizeChanger: true,
+            showQuickJumper: true,
+            showTotal: (total, range) =>
+              `${range[0]}-${range[1]} of ${total} items`,
+          }}
+          scroll={{ x: 800 }}
+        />
+      </Card>
+
+      <UserFormModal
+        open={modalOpen}
+        editingUser={editingUser}
+        loading={formLoading}
+        onCancel={handleModalClose}
+        onSubmit={handleFormSubmit}
+      />
+    </div>
   )
 }
 

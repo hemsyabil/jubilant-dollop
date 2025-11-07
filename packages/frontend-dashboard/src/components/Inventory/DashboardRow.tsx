@@ -1,4 +1,4 @@
-import { Box } from "@mui/material"
+import { Row } from "antd"
 import { type ReactNode } from "react"
 
 interface DashboardRowProps {
@@ -6,18 +6,15 @@ interface DashboardRowProps {
   fullWidth?: boolean
 }
 
-const DashboardRow = ({ children, fullWidth = false }: DashboardRowProps) => {
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: fullWidth ? "column" : { xs: "column", lg: "row" },
-        gap: 2,
-      }}
-    >
-      {children}
-    </Box>
-  )
+const DashboardRow: React.FC<DashboardRowProps> = ({
+  children,
+  fullWidth = false,
+}) => {
+  if (fullWidth) {
+    return <Row gutter={[16, 16]}>{children}</Row>
+  }
+
+  return <Row gutter={[16, 16]}>{children}</Row>
 }
 
 export default DashboardRow

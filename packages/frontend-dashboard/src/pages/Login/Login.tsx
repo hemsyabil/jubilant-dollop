@@ -1,16 +1,18 @@
-import { Typography, Box, Container } from "@mui/material";
-import { useTranslation } from 'react-i18next';
-import './Login.css';
+import { Typography } from "antd"
+import { useTranslation } from "react-i18next"
+import "./Login.css"
+
+const { Title } = Typography
 
 const Login = () => {
-    const { t } = useTranslation();
+  const { t } = useTranslation()
   return (
-    <Box>
-      <Container>
-        <Typography variant="h4">{t('login')}</Typography>
-        </Container>
-    </Box>
-  );
-};
+    <div style={{ padding: "24px" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        <Title level={2}>{t("login")}</Title>
+      </div>
+    </div>
+  )
+}
 
-export default Login;
+export default Login

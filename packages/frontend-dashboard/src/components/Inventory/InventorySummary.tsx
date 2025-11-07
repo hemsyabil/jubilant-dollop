@@ -1,60 +1,49 @@
-import { Box, Paper, Typography } from "@mui/material"
-import { useTranslation } from "react-i18next"
-import type { InventoryItem } from "../../utils/web/chartService"
+import { Card, Col, Divider, List, Tag, Typography } from 'antd'
+import { useTranslation } from 'react-i18next'
+import type { InventoryItem } from '../../utils/web/chartService'
+
+const { Title, Text } = Typography
 
 interface InventorySummaryProps {
   inventoryData: InventoryItem[]
   height?: number
 }
 
-const InventorySummary = ({
+const InventorySummary: React.FC<InventorySummaryProps> = ({
   inventoryData,
   height = 400,
-}: InventorySummaryProps) => {
+}) => {
   const { t } = useTranslation()
 
   return (
-    <Box sx={{ flex: 1 }}>
-      <Paper elevation={3} sx={{ p: 3, height }}>
-        <Typography variant="h6" gutterBottom>
-          {t("current_inventory_items")}
-        </Typography>
-        <Box sx={{ maxHeight: height - 80, overflow: "auto" }}>
-          {inventoryData.map((item) => (
-            <Box
-              key={item.id}
-              sx={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                py: 1,
-                borderBottom: "1px solid #f0f0f0",
-              }}
-            >
-              <Box>
-                <Typography variant="body2" fontWeight="bold">
-                  {item.name}
-                </Typography>
-                <Typography variant="caption" color="textSecondary">
-                  {item.category}
-                </Typography>
-              </Box>
-              <Box textAlign="right">
-                <Typography variant="body2" fontWeight="bold">
-                  ${item.price}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  color={item.stock > 20 ? "success.main" : "warning.main"}
-                >
-                  {item.stock} {t("in_stock")}
-                </Typography>
-              </Box>
-            </Box>
-          ))}
-        </Box>
-      </Paper>
-    </Box>
+    <Col xs={24} lg={8}>
+      <Card title={t('current_inventory_items')} style={{ height }}>
+        <List
+          dataSource={inventoryData}
+          style={{ maxHeight: height - 120, overflow: 'auto' }}
+          renderItem={(item) => (
+            <List.Item>
+              <List.Item.Meta
+                title={
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Text strong>{item.name}</Text>
+                    <Text strong>${item.price}</Text>
+                  </div>
+                }
+                description={
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <Text type="secondary">{item.category}</Text>
+                    <Tag color={item.stock > 20 ? 'green' : 'orange'}>
+                      {item.stock} {t('in_stock')}
+                    </Tag>
+                  </div>
+                }
+              />
+            </List.Item>
+          )}
+        />
+      </Card>
+    </Col>
   )
 }
 

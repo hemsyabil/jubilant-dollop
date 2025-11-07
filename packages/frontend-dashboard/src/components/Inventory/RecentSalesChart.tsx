@@ -1,7 +1,7 @@
-import { Box } from "@mui/material"
-import { useTranslation } from "react-i18next"
-import type { SalesData } from "../../utils/web/chartService"
-import ChartJSBarChart from "../Charts/ChartJSBarChart"
+import { Col } from 'antd'
+import { useTranslation } from 'react-i18next'
+import AntdBarChart from '../AntdCharts/AntdBarChart'
+import type { SalesData } from '../../utils/web/chartService'
 
 interface RecentSalesChartProps {
   salesData: SalesData[]
@@ -9,34 +9,34 @@ interface RecentSalesChartProps {
   monthsToShow?: number
 }
 
-const RecentSalesChart = ({
+const RecentSalesChart: React.FC<RecentSalesChartProps> = ({
   salesData,
   height = 300,
   monthsToShow = 6,
-}: RecentSalesChartProps) => {
+}) => {
   const { t } = useTranslation()
 
   return (
-    <Box>
-      <ChartJSBarChart
+    <Col span={24}>
+      <AntdBarChart
         data={salesData.slice(-monthsToShow)}
-        title={t("recent_sales_vs_orders")}
+        title={t('recent_sales_vs_orders')}
         xDataKey="month"
         bars={[
           {
-            dataKey: "sales",
-            backgroundColor: "#8884d8",
-            label: t("sales_volume"),
+            dataKey: 'sales',
+            backgroundColor: '#8884d8',
+            label: t('sales_volume'),
           },
           {
-            dataKey: "orders",
-            backgroundColor: "#82ca9d",
-            label: t("total_orders"),
+            dataKey: 'orders',
+            backgroundColor: '#82ca9d',
+            label: t('total_orders'),
           },
         ]}
         height={height}
       />
-    </Box>
+    </Col>
   )
 }
 
