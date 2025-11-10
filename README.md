@@ -53,7 +53,7 @@ In addition, it is good to have an editor to work with the code like [VSCode] (h
 ```bash
 
 # Clone this repository
-$ git clone git@github.com: evelinsteiger / README-template.git
+$ git clone git@github.com:hemsyabil/jubilant-dollop.git
 
 # Access the project folder in your terminal
 $ cd README-template
