@@ -1,0 +1,27 @@
+.kpi-data-head {
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: -10px;
+    padding-bottom: 0;
+}
+
+.box-style {
+    width: 100%;
+}
+
+.kpi-data-card {
+    font-weight: normal;
+    font-size: 14px;
+    width: 100%;
+    margin-top: 8px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.status-pie-chart {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 50px 0px 0px 20px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}

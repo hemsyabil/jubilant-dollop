@@ -7,6 +7,8 @@
   "dashboard": "Dashboard",
   "settings": "Settings",
   "footer_text": "All rights reserved",
+  "overall": "Overall Metrics",
+  "key performance": "Key Performance Metrics",
   "user_management": "User Management",
   "add_user": "Add User",
   "edit_user": "Edit User",

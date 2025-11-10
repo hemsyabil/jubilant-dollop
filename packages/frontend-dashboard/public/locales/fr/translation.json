@@ -7,6 +7,8 @@
   "dashboard": "Tableau de bord",
   "settings": "Paramètres",
   "footer_text": "Tous droits réservés",
+  "overall": "Dans l'ensemble",
+  "key performance": "Indicateurs clés de performance",
   "user_management": "Gestion des utilisateurs",
   "add_user": "Ajouter un utilisateur",
   "edit_user": "Modifier l'utilisateur",
