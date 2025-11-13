@@ -5,12 +5,14 @@ import { Breadcrumb, Col, Flex, Row } from 'antd';
 import KPIDataHead from '../../components/Dashboard/KPIDataHead';
 import KPIDataCard from '../../components/Dashboard/KPIDataCard';
 import StatusPieChart from '../../components/Dashboard/StatusPieChart';
+import FunctionPieChart from '../../components/Dashboard/FunctionPieChart';
+import DeviceBarChart from '../../components/Dashboard/DeviceBarChart';
 
 export default function Dashboard() {
     return (
         <div className='container'>
             <Row justify="space-between" align="middle">
-                <Col span={15}>
+                <Col span={14}>
                     {/* Left side KPI Data Cards */}
                     <Flex gap="middle" align="start" vertical>
                         <KPIDataHead title="overall" />
@@ -27,10 +29,26 @@ export default function Dashboard() {
                         </Flex>
                     </Flex>
                 </Col>
-                <Col span={9}>
+                <Col span={10}>
                     {/* Right side Status Pie Chart */}
-                    <StatusPieChart />
+                    <Flex gap="middle" justify='space-between' style={{ width: '100%' }}>
+                        <StatusPieChart />
+                    </Flex>
                 </Col>
+            </Row>
+
+            <Row justify="space-between" align="middle">
+                <Flex gap="middle" justify='space-between' style={{ width: '100%' }}>
+                    <FunctionPieChart />
+                    <DeviceBarChart />
+                </Flex>
+            </Row>
+
+            <Row justify="space-between" align="middle">
+                <KPIDataHead title="overall" />
+                <Flex gap="middle" justify='space-between' style={{ width: '100%' }}>
+
+                </Flex>
             </Row>
         </div >
     )
