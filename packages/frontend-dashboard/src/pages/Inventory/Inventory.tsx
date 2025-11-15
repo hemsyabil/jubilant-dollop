@@ -11,13 +11,32 @@ import {
 } from "../../components/Inventory"
 import useInventoryData from "../../hooks/useInventoryData"
 import "./Inventory.css"
+import { useEffect, useState } from "react"
 
 const { Title } = Typography
 
 const Inventory = () => {
   const { t } = useTranslation()
+  const [count , setCount] = useState(0)
+  const [name , setName]=useState('')
   const { salesData, categoryData, inventoryData, loading, error } =
     useInventoryData()
+
+    console.log(count, name)
+    // useState, useEffect , useMemo, UseCallback
+
+    useEffect(()=>{   
+      console.log('hem')
+      if(count >0) {
+        setName('hem')
+      }
+
+      return ()=>{
+        setName('')
+        setCount(0)
+      }
+
+    },[count])
 
   if (loading) {
     return <LoadingSpinner />
@@ -40,6 +59,12 @@ const Inventory = () => {
 
   return (
     <div style={{ padding: "24px" }}>
+      {count}
+      {name}
+      <button onClick={()=>{
+        setCount((prev)=>prev+1)
+
+      }} >increase</button>
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         <Title level={2} style={{ marginBottom: "24px" }}>
           {t("inventory_dashboard")}
