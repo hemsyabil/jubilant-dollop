@@ -3,6 +3,7 @@ import {
   BulbOutlined,
   GlobalOutlined,
   LoginOutlined,
+  SettingOutlined,
 } from "@ant-design/icons"
 import { Button, Layout, Space, Typography } from "antd"
 import { useState } from "react"
@@ -28,6 +29,10 @@ const Header = () => {
 
   const handleLogin = () => {
     navigate("/login")
+  }
+
+  const handleSettings = () => {
+    navigate("/settings")
   }
 
   return (
@@ -93,6 +98,21 @@ const Header = () => {
           }}
         >
           {language}
+        </Button>
+
+        <Button
+          type="text"
+          icon={<SettingOutlined />}
+          onClick={handleSettings}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+            height: "40px",
+            padding: "0 12px",
+          }}
+        >
+          {t("settings")}
         </Button>
 
         <Button
